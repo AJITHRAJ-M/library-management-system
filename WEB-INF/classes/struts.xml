@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts  
+Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">  
+
+<struts>  
+<package name="default" extends="struts-default">  
+
+<interceptors>
+      <interceptor name = "adminauthInterceptor" class="main.adminInterceptor" />
+      <interceptor name = "staffInterceptor" class="main.staffInterceptor" />
+       <interceptor name = "studentInterceptor" class="main.studentInterceptor" />
+      
+
+       <interceptor-stack name = "secureStack">
+        <interceptor-ref name = "adminauthInterceptor" />
+        <interceptor-ref name = "defaultStack" />
+      </interceptor-stack>
+
+
+       <interceptor-stack name = "staffStack">
+      <interceptor-ref name = "staffInterceptor"/>
+       <interceptor-ref name = "defaultStack" />
+      </interceptor-stack>
+
+       <interceptor-stack name = "studentStack">
+      <interceptor-ref name = "studentInterceptor" />
+      <interceptor-ref name = "defaultStack" />
+      </interceptor-stack> 
+
+ </interceptors> 
+
+<action name="loginAction" class="main.loginAction">  
+<result name="admin">/jsp/admin/adminhome.jsp</result>  
+<result name="student">/jsp/student/studenthome.jsp</result> 
+<result name="staff">/jsp/staff/staffhome.jsp</result>
+<result name="failure">index.jsp</result>
+</action> 
+    
+<action name="logout" class="main.logout">
+<result name = "success">index.jsp</result>
+</action>
+
+ <action name="addstudentadmin">  
+<interceptor-ref name = "secureStack" />
+<result name="loginAction">/index.jsp</result> 
+<result >jsp/admin/addstudent.jsp</result>  
+</action> 
+
+<action name="addstudentadmin" class="main.addstudent">  
+ <interceptor-ref name = "secureStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/admin/output.jsp</result>  
+<result name="failure">/jsp/admin/addstudent.jsp</result>  
+</action> 
+
+<action name="addstaffadmin">  
+ <interceptor-ref name = "secureStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result>jsp/admin/addstaff.jsp</result>  
+</action>
+
+<action name="addstaffadmin" class="main.addstaff">  
+ <interceptor-ref name = "secureStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/admin/output.jsp</result>  
+<result name="failure">jsp/admin/addstaff.jsp</result>  
+</action>  
+
+<action name="addbookadmin" class="main.addbook">  
+  <interceptor-ref name = "secureStack" />
+  <result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/admin/output.jsp</result>  
+<result name="failure">/jsp/admin/addbook.jsp</result>  
+</action>
+
+<action name="listbookadmin" class="main.listbook">  
+ <interceptor-ref name = "secureStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/admin/listbook.jsp</result>  
+</action> 
+
+<action name="liststudentadmin" class="main.liststudent">  
+<interceptor-ref name = "secureStack" />
+<result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/admin/liststudent.jsp</result>  
+</action> 
+
+<action name="liststudentstaff" class="main.liststudent">  
+ <interceptor-ref name = "staffStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/staff/liststudent.jsp</result>  
+</action> 
+
+<action name="listbookstaff" class="main.listbook">  
+ <interceptor-ref name = "staffStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/staff/listbook.jsp</result>  
+</action> 
+
+
+<action name="liststaffadmin" class="main.liststaff">  
+<interceptor-ref name = "secureStack" />
+<result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/admin/liststaff.jsp</result>  
+</action>
+
+<action name="liststudentbybookadmin" class="main.liststudentbybook">  
+<interceptor-ref name = "secureStack" />
+<result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/admin/liststudentbybook.jsp</result>  
+</action>
+
+
+
+
+<action name="addBookadmin">  
+ <interceptor-ref name = "secureStack" />
+<result>jsp/admin/addbook.jsp</result>  
+</action>
+
+<action name="adminhome">  
+ <interceptor-ref name = "secureStack" />
+<result>jsp/admin/adminhome.jsp</result>  
+</action>
+
+
+
+<action name="addStudentstaff">  
+ <interceptor-ref name ="staffStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result>jsp/staff/addstudent.jsp</result>  
+</action>                  
+
+<action name="addBookstaff">  
+  <interceptor-ref name = "staffStack" />
+  <result name="loginAction">/index.jsp</result> 
+<result>jsp/staff/addbook.jsp</result>  
+</action>  
+
+
+
+<action name="staffStack">  
+<interceptor-ref name = "staffStack" />
+<result name="loginAction">/index.jsp</result> 
+<result>jsp/staff/liststudent.jsp</result>  
+</action>
+
+<action name="staffhome">  
+<interceptor-ref name = "staffStack" />
+<result name="loginAction">/index.jsp</result> 
+<result>jsp/staff/staffhome.jsp</result>  
+</action>
+
+<action name="addstudentbystaff" class="main.addstudent">  
+ <interceptor-ref name = "staffStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/staff/output.jsp</result>  
+<result name="failure">jsp/staff/addstudent.jsp</result>  
+</action>
+
+
+<action name="addbookstaff" class="main.addbook">  
+ <interceptor-ref name = "staffStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result name="success">/jsp/staff/output.jsp</result>  
+<result name="failure">jsp/staff/addstaff.jsp</result>  
+</action>
+
+ <action name="addBooktostudent">  
+  <interceptor-ref name = "studentStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result>jsp/student/addbooktostudent.jsp</result>  
+
+</action>
+ 
+<action name="removeBooktostudent">  
+ <interceptor-ref name = "studentStack" />
+ <result name="loginAction">/index.jsp</result> 
+<result>jsp/student/removebooktostudent.jsp</result>  
+</action> 
+
+ 
+<action name="addbooktostudent" class="student.addbooktostudent">  
+   <interceptor-ref name = "studentStack" />
+   <result name="loginAction">/index.jsp</result> 
+<result name="success">jsp/student/output.jsp</result>  
+<result name="failure">jsp/student/addbooktostudent.jsp</result>  
+</action>
+
+<action name="removebooktostudent" class="student.removebooktostudent">  
+  <interceptor-ref name = "studentStack" />
+  <result name="loginAction">/index.jsp</result> 
+<result name="success">jsp/student/output1.jsp</result>  
+<result name="failure">jsp/student/removebooktostudent.jsp</result>  
+</action> 
+
+<action name="studenthome">  
+<interceptor-ref name = "studentStack" />
+<result name="loginAction">/index.jsp</result> 
+<result>jsp/student/studenthome.jsp</result>  
+</action>
+
+</package>  
+</struts>  
+          
+
+
+    
